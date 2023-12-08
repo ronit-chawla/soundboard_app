@@ -1,0 +1,40 @@
+<% layout('boilerplate') %>
+  <form action="/" method="get">
+    <div class="mb-2">
+      <label for="title" class="form-label">Search Audio</label>
+      <input type="text" class="form-control" id="title" name="title">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Search By Category:</label>
+      <select class="form-select form-select-lg mb-3" name="category">
+        <option value="" id="any">Any</option>
+        <% cat.forEach(cat=>{%>
+          <option value="<%=cat.title%>" id="<%=cat.title%>">
+            <%=cat.title%>
+          </option>
+          <%}); %>
+      </select>
+    </div>
+    <div class="d-grid gap-2 mb-4">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+  <div class="container">
+    <% audios.forEach((audio,i)=>{%>
+      <div id="<%=audio._id%>" class="my-3 border  border-primary-subtle py-1 px-3 audio">
+        <%=audio.title%>
+      </div>
+      <%}); %>
+  </div>
+  <% let a=audios; %>
+    <script>
+      const audios = JSON.parse('<%- JSON.stringify(audios) %>')
+      const selectedCat = JSON.parse('<%- JSON.stringify(selectedCat) %>')
+      document.getElementById(selectedCat).setAttribute("selected", true)
+      audios.forEach(audio => {
+        document.getElementById(audio._id).addEventListener('click', () => {
+          new Audio(audio.audio).play()
+        })
+      });
+    </script>
