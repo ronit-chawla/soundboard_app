@@ -66,7 +66,7 @@ router.post('/category', async (req, res, next) => {
     await category.save();
   } catch (err) {}
   console.log(category);
-  res.redirect('/');
+  res.redirect('back');
 });
 
 module.exports = router;
